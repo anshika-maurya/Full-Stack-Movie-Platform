@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
+import { fetchTrailer } from "../services/tmdbApi";
 
 function TrailerModal({ movieId, onClose }) {
   const [trailerKey, setTrailerKey] = useState(null);
 
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+  
 
   useEffect(() => {
     const fetchTrailer = async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`,
-      );
+      const videos = await fetchTrailer(movieId);
 
-      const data = await res.json();
-
-      const trailer = data.results.find((video) => video.type === "Trailer");
+      const trailer = videos.find((video) => video.type === "Trailer");
 
       if (trailer) {
         setTrailerKey(trailer.key);
