@@ -2,36 +2,29 @@ import { useState } from "react";
 import { signupUser } from "../services/authApi";
 
 function Signup() {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignup = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
+    try {
+      await signupUser({
+        name,
+        email,
+        password,
+      });
 
-    await signupUser({
-      name,
-      email,
-      password
-    });
-
-    alert("Signup successful");
-
-  } catch (error) {
-
-    alert("Signup failed");
-
-  }
-};
+      alert("Signup successful");
+    } catch (error) {
+      alert("Signup failed");
+    }
+  };
 
   return (
     <div className="p-10 bg-black min-h-screen text-white flex justify-center">
-
       <form onSubmit={handleSignup} className="w-80 flex flex-col gap-4">
-
         <h1 className="text-3xl mb-4">Signup</h1>
 
         <input
@@ -58,12 +51,8 @@ function Signup() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="bg-red-600 p-2 rounded">
-          Signup
-        </button>
-
+        <button className="bg-red-600 p-2 rounded">Signup</button>
       </form>
-
     </div>
   );
 }

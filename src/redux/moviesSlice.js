@@ -2,21 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const movieSlice = createSlice({
   name: "movies",
+
   initialState: {
-    shows: [],
-    favorites: []
+    movies: [],
+    favorites: [],
+    history: [],
   },
 
-  
-
   reducers: {
-
-    setShows: (state, action) => {
-      state.shows = action.payload;
-    },
-
-    appendShows: (state, action) => {
-      state.shows = [...state.shows, ...action.payload];
+    appendMovies: (state, action) => {
+      state.movies = [...state.movies, ...action.payload];
     },
 
     addFavorite: (state, action) => {
@@ -25,38 +20,25 @@ const movieSlice = createSlice({
 
     removeFavorite: (state, action) => {
       state.favorites = state.favorites.filter(
-        movie => movie.id !== action.payload
+        (movie) => movie.id !== action.payload,
       );
-    }
+    },
+    setMovies: (state, action) => {
+      state.movies = action.payload;
+    },
 
+    addHistory: (state, action) => {
+      state.history.unshift(action.payload);
+    },
   },
-
-  initialState: {
-  shows: [],
-  favorites: [],
-  history: []
-  },
-
-  addHistory: (state, action) => {
-  const exists = state.history.find(
-    movie => movie.id === action.payload.id
-  );
-
-  if (!exists) {
-    state.history.unshift(action.payload);
-  }
-},
-
-
 });
 
 export const {
-  setShows,
-  appendShows,
+  appendMovies,
   addFavorite,
+  setMovies,
   removeFavorite,
-  addHistory
+  addHistory,
 } = movieSlice.actions;
-
 
 export default movieSlice.reducer;
