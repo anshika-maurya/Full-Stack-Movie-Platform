@@ -3,13 +3,17 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const API = import.meta.env.VITE_API_URL;
 
 const fetchFromBackend = async (endpoint) => {
+  try {
+    const res = await fetch(`${API}/api/tmdb?endpoint=${endpoint}`);
 
-  const res = await fetch(`${API}/api/tmdb?endpoint=${endpoint}?`);
+    const data = await res.json();
 
-  const data = await res.json();
+    return data?.results || [];
 
-  return data.results;
-
+  } catch (error) {
+    console.error("API error:", error);
+    return [];
+  }
 };
 
 export const fetchTrending = async () => {
@@ -48,9 +52,7 @@ export const searchMulti = (query) =>
 
 export const fetchPopularMovies = async (page = 1) => {
 
-  const data = await fetchFromBackend(`movie/popular?page=${page}`);
-
-  return data.results;
+  return await fetchFromBackend(`movie/popular?page=${page}`);
 
 };
 
