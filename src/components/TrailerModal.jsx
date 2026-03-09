@@ -4,20 +4,21 @@ import { fetchTrailer } from "../services/tmdbApi";
 function TrailerModal({ movieId, onClose }) {
   const [trailerKey, setTrailerKey] = useState(null);
 
-  
-
   useEffect(() => {
-    const fetchTrailer = async () => {
+    const loadTrailer = async () => {
+
       const videos = await fetchTrailer(movieId);
 
-      const trailer = videos.find((video) => video.type === "Trailer");
+      const trailer = videos.find(
+        (video) => video.type === "Trailer" && video.site === "YouTube"
+      );
 
       if (trailer) {
         setTrailerKey(trailer.key);
       }
     };
 
-    fetchTrailer();
+    loadTrailer();
   }, [movieId]);
 
   return (
