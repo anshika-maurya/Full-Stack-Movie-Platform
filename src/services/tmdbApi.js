@@ -38,7 +38,11 @@ export const fetchPopularMovies = async (page = 1) => {
 
 export const fetchGenres = async () => {
 
-  const data = await fetchFromBackend("genre/movie/list");
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/tmdb?endpoint=genre/movie/list`
+  );
+
+  const data = await res.json();
 
   return data.genres;
 
@@ -51,13 +55,21 @@ export const fetchMoviesByGenre = (genreId) =>
 
 export const fetchMovieDetails = async (id) => {
 
-  return await fetchFromBackend(`movie/${id}`);
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/tmdb?endpoint=movie/${id}`
+  );
+
+  return await res.json();
 
 };
 
 export const fetchCast = async (id) => {
 
-  const data = await fetchFromBackend(`movie/${id}/credits`);
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/tmdb?endpoint=movie/${id}/credits`
+  );
+
+  const data = await res.json();
 
   return data.cast;
 
@@ -65,7 +77,11 @@ export const fetchCast = async (id) => {
 
 export const fetchTrailer = async (id) => {
 
-  const data = await fetchFromBackend(`movie/${id}/videos`);
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/api/tmdb?endpoint=movie/${id}/videos`
+  );
+
+  const data = await res.json();
 
   return data.results;
 
