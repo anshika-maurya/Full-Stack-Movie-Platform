@@ -59,14 +59,14 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="p-10 bg-black min-h-screen text-white">
+    <div className="min-h-screen p-10 text-white bg-gradient-to-br from-black via-gray-900 to-black">
       <h1 className="text-3xl mb-6">Admin Dashboard</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-96">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-96 p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-gray-800 shadow-2xl">
         <input
           type="text"
           placeholder="Movie Title"
-          className="p-2 bg-gray-800 rounded"
+          className="p-3 bg-black/40 border border-gray-700 rounded-lg outline-none focus:border-red-500 transition"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -74,7 +74,7 @@ function AdminDashboard() {
         <input
           type="text"
           placeholder="Poster URL"
-          className="p-2 bg-gray-800 rounded"
+          className="p-3 bg-black/40 border border-gray-700 rounded-lg outline-none focus:border-red-500 transition"
           value={poster}
           onChange={(e) => setPoster(e.target.value)}
         />
@@ -82,19 +82,19 @@ function AdminDashboard() {
         <input
           type="text"
           placeholder="Trailer YouTube Link"
-          className="p-2 bg-gray-800 rounded"
+          className="p-3 bg-black/40 border border-gray-700 rounded-lg outline-none focus:border-red-500 transition"
           value={trailer}
           onChange={(e) => setTrailer(e.target.value)}
         />
 
         <textarea
           placeholder="Description"
-          className="p-2 bg-gray-800 rounded"
+          className="p-3 bg-black/40 border border-gray-700 rounded-lg outline-none focus:border-red-500 resize-none"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <button className="bg-red-600 p-2 rounded">
+        <button className="bg-red-600 hover:bg-red-500 transition p-3 rounded-lg font-semibold shadow-lg">
           {loading ? "Adding..." : "Add Movie"}
         </button>
       </form>
@@ -105,7 +105,7 @@ function AdminDashboard() {
         {movies.map((movie) => (
           <div
             key={movie._id}
-            className="bg-gray-800 p-4 rounded flex justify-between items-center"
+            className="bg-white/5 border border-gray-800 p-4 rounded-xl flex justify-between items-center backdrop-blur-md hover:border-red-500 transition"
           >
             <Link to={`/movie/${movie._id}`}>
   <span className="cursor-pointer hover:text-red-500">
@@ -115,7 +115,7 @@ function AdminDashboard() {
 
             <button
               onClick={() => handleDelete(movie._id)}
-              className="bg-red-600 px-3 py-1 rounded"
+              className="bg-red-600 hover:bg-red-500 px-3 py-1 rounded-lg transition"
             >
               Delete
             </button>
