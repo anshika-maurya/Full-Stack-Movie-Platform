@@ -1,45 +1,32 @@
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-export const fetchTrending = async () => {
+const API = import.meta.env.VITE_API_URL;
 
-  const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/tmdb/trending`
-  );
+const fetchFromBackend = async (endpoint) => {
 
-  const data = await res.json();
-
-  return data.results;
-};
-
-export const fetchPopular = async () => {
-  const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results;
-};
-
-export const fetchTopRated = async () => {
-  const res = await fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results;
-};
-
-export const fetchTVShows = async () => {
-  const res = await fetch(`${BASE_URL}/tv/popular?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results;
-};
-
-export const searchMulti = async (query) => {
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
-  const res = await fetch(
-    `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${query}`,
-  );
+  const res = await fetch(`${API}/api/tmdb?endpoint=${endpoint}?`);
 
   const data = await res.json();
 
   return data.results;
+
 };
+
+export const fetchTrending = () =>
+  fetchFromBackend("trending/movie/week");
+
+
+export const fetchPopular = () =>
+  fetchFromBackend("movie/popular");
+
+export const fetchTopRated = () =>
+  fetchFromBackend("movie/top_rated");
+
+export const fetchTVShows = () =>
+  fetchFromBackend("tv/popular");
+
+export const searchMulti = (query) =>
+  fetchFromBackend(`search/multi?query=${query}`);
 
 export const fetchPopularMovies = async (page = 1) => {
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -65,14 +52,16 @@ export const fetchGenres = async () => {
   return data.genres;
 };
 
-export const fetchMoviesByGenre = async (genreId) => {
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+export const fetchMoviesByGenre = (genreId) =>
+  fetchFromBackend(`discover/movie?with_genres=${genreId}`);
 
-  const res = await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`,
-  );
 
-  const data = await res.json();
 
-  return data.results;
-};
+export const fetchMovieDetails = (id) =>
+  fetchFromBackend(`movie/${id}`);
+
+export const fetchCast = (id) =>
+  fetchFromBackend(`movie/${id}/credits`);
+
+export const fetchTrailer = (id) =>
+  fetchFromBackend(`movie/${id}/videos`);
