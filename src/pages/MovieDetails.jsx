@@ -1,8 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { fetchMovieDetails, fetchCast } from "../services/tmdbApi";
 import TrailerModal from "../components/TrailerModal";
 import { useDispatch } from "react-redux";
 import { addHistory } from "../redux/moviesSlice";
+
 
 function MovieDetails() {
   const { id } = useParams();
@@ -12,39 +14,27 @@ function MovieDetails() {
 
   const dispatch = useDispatch();
 
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
+  
   const IMG = "https://image.tmdb.org/t/p/w500";
 
   useEffect(() => {
-    const getDetails = async () => {
-      
-      const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
-      );
+  const getDetails = async () => {
 
-      const movieData = await res.json();
+    const movieData = await fetchMovieDetails(id);
 
-      setMovie(movieData);
+    setMovie(movieData);
 
-      if (movieData) {
-        dispatch(addHistory(movieData));
-      }
+    if (movieData) {
+      dispatch(addHistory(movieData));
+    }
 
-     
-      const creditsRes = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`,
-      );
+    const castData = await fetchCast(id);
 
-      const creditsData = await creditsRes.json();
+    setCast(castData.slice(0, 8));
+  };
 
-      console.log("CAST DATA:", creditsData);
-
-      setCast(creditsData.cast.slice(0, 8));
-    };
-
-    getDetails();
-  }, [id]);
+  getDetails();
+}, [id]);
 
   if (!movie) {
     return <p className="text-white p-10">Loading...</p>;
