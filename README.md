@@ -130,51 +130,6 @@ JWT_SECRET=your_secret_key
 TMDB_KEY=your_tmdb_api_key
 
 
----
-
-## 📂 Project Structure
-
-
-hungama
-│
-├── frontend
-│ ├── src
-│ │ ├── components
-│ │ │ ├── HeroBanner.jsx
-│ │ │ ├── MovieCard.jsx
-│ │ │ ├── MovieRow.jsx
-│ │ │ └── TrailerModal.jsx
-│ │ │
-│ │ ├── pages
-│ │ │ ├── Home.jsx
-│ │ │ ├── MovieDetails.jsx
-│ │ │ ├── Search.jsx
-│ │ │ ├── Favorites.jsx
-│ │ │ └── AdminDashboard.jsx
-│ │ │
-│ │ ├── redux
-│ │ │ └── moviesSlice.js
-│ │ │
-│ │ └── services
-│ │ ├── tmdbApi.js
-│ │ ├── moviesApi.js
-│ │ └── authApi.js
-│ │
-│ └── package.json
-│
-├── backend
-│ ├── routes
-│ │ ├── authRoutes.js
-│ │ └── movieRoutes.js
-│ │
-│ ├── models
-│ │ └── Movie.js
-│ │
-│ ├── server.js
-│ └── package.json
-│
-└── README.md
-
 
 ---
 
