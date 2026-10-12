@@ -15,7 +15,9 @@ const movieSlice = createSlice({
     },
 
     addFavorite: (state, action) => {
-      state.favorites.push(action.payload);
+      if (!state.favorites.some((movie) => movie.id === action.payload.id)) {
+        state.favorites.push(action.payload);
+      }
     },
 
     removeFavorite: (state, action) => {
