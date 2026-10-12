@@ -1,19 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../services/authApi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import Toast from "../components/Toast";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState(null);
+  const [redirecting, setRedirecting] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!redirecting) return undefined;
+
+    const timeout = setTimeout(() => navigate("/"), 1400);
+    return () => clearTimeout(timeout);
+  }, [navigate, redirecting]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      return setError("All fields are required");
+      return setToast({ type: "error", message: "All fields are required." });
     }
 
     try {
@@ -26,16 +37,26 @@ function Login() {
 
       localStorage.setItem("token", token);
 
-      alert("Login successful");
-
-      window.location.href = "/";
+      setToast({ type: "success", message: "Login successful. Welcome back!" });
+      setRedirecting(true);
     } catch (error) {
-      setError("Login failed. Check credentials.");
+      setToast({
+        type: "error",
+        message:
+          error.response?.data?.message || "Login failed. Check your credentials.",
+      });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
 
       <form
         onSubmit={handleLogin}
@@ -43,10 +64,6 @@ function Login() {
       >
 
         <h1 className="text-3xl font-bold text-center">Login</h1>
-
-        {error && (
-          <p className="text-red-400 text-sm text-center">{error}</p>
-        )}
 
         <input
           type="email"
@@ -81,6 +98,7 @@ function Login() {
 
         <button
           type="submit"
+          disabled={redirecting}
           className="bg-red-600 hover:bg-red-500 transition p-3 rounded-lg font-semibold"
         >
           Login
