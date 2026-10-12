@@ -23,23 +23,23 @@ function Navbar() {
           Home
         </Link>
 
-        <Link to="/adventure" className="hover:text-red-500">
+        <Link to="/genre/adventure" className="hover:text-red-500">
           Adventure
         </Link>
 
-        <Link to="/romance" className="hover:text-red-500">
+        <Link to="/genre/romance" className="hover:text-red-500">
           Romance
         </Link>
 
-        <Link to="/comedy" className="hover:text-red-500">
+        <Link to="/genre/comedy" className="hover:text-red-500">
           Comedy
         </Link>
 
-        <Link to="/tv-movie" className="hover:text-red-500">
+        <Link to="/genre/tv-movie" className="hover:text-red-500">
           TV Movie
         </Link>
 
-        <Link to="/drama" className="hover:text-red-500">
+        <Link to="/genre/drama" className="hover:text-red-500">
           Drama
         </Link>
       </div>

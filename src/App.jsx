@@ -15,12 +15,7 @@ function App() {
 
   return (
     <>
-      <Navbar
-        onGenreClick={(genre) => {
-          const genreId = GENRE_MAP[genre];
-          fetchMoviesByGenre(genreId);
-        }}
-      />
+      <Navbar />
       <AppRoutes />
     </>
   );

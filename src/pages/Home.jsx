@@ -4,7 +4,7 @@ import { fetchPopularMovies } from "../services/tmdbApi";
 import MovieCard from "../components/MovieCard";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { appendMovies, setMovies } from "../redux/moviesSlice";
+import { appendMovies } from "../redux/moviesSlice";
 
 import HeroBanner from "../components/HeroBanner";
 
@@ -13,7 +13,6 @@ import {
   fetchPopular,
   fetchTopRated,
   fetchTVShows,
-  fetchGenres,
 } from "../services/tmdbApi";
 import MovieRow from "../components/MovieRow";
 
@@ -43,29 +42,6 @@ function Home() {
   const [topRated, setTopRated] = useState([]);
   const [tvShows, setTvShows] = useState([]);
 
-  const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState(null);
-
-  const GENRE_MAP = {
-    Adventure: 12,
-    Romance: 10749,
-    Comedy: 35,
-    "TV Movie": 10770,
-    Drama: 18,
-  };
-
-  const fetchMoviesByGenre = async (genreId) => {
-    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
-    const res = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`,
-    );
-
-    const data = await res.json();
-
-    dispatch(setMovies(data.results));
-  };
-
   useEffect(() => {
     loadMovies();
   }, [page]);
@@ -87,15 +63,6 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const loadGenres = async () => {
-      const data = await fetchGenres();
-      setGenres(data);
-    };
-
-    loadGenres();
-  }, []);
-
-  useEffect(() => {
     const loadTMDB = async () => {
       setTrending(await fetchTrending());
       setPopular(await fetchPopular());
@@ -105,18 +72,6 @@ function Home() {
 
     loadTMDB();
   }, []);
-
-  useEffect(() => {
-    if (!selectedGenre) return;
-
-    const loadGenreMovies = async () => {
-      const data = await fetchMoviesByGenre(selectedGenre);
-
-      dispatch(appendMovies(data));
-    };
-
-    loadGenreMovies();
-  }, [selectedGenre]);
 
   return (
     <div className="bg-black min-h-screen hide-scrollbar overflow-x-hidden">

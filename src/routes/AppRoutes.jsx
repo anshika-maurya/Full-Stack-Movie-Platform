@@ -8,11 +8,13 @@ import History from "../pages/History";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import AdminDashboard from "../pages/AdminDashboard";
+import GenreMovies from "../pages/GenreMovies";
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/genre/:genre" element={<GenreMovies />} />
       <Route path="/search" element={<Search />} />
       <Route
         path="/favorites"
