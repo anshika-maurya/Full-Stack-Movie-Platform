@@ -1,15 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiSearch, FiHeart, FiUser } from "react-icons/fi";
 import { useState } from "react";
 import logo from "../assets/logo.png";
 
 function Navbar() {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    setToken(null);
+    setOpen(false);
+    navigate("/login", { replace: true, flushSync: true });
   };
 
   return (
